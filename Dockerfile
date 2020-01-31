@@ -9,5 +9,6 @@ ADD / .
 
 RUN swift build -c release -Xlinker -L/usr/local/lib
 RUN cp /fileuploader/.build/x86_64-unknown-linux/release/fileuploader /usr/local/bin
+RUN chown -R $USER ./public
 
 CMD fileuploader

@@ -14,33 +14,16 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="container p-4 bg-light">
-        <form class="form mb-4" method="POST" action="/" enctype="multipart/form-data">
+    <div class="container bg-light">
+        <form class="form" method="POST" action="/connection">
             <div class="form-group">
-                <label for="description">Description :</label>
-                <textarea id="description" name="description" class="lg-textarea form-control"></textarea>
+                <label for="password">Mot de Passe :</label>
+                <input id="password" name="password" type="password" class="form-control">
             </div>
             <div class="form-group">
-                <label for="file">File :</label>
-                <input id="file" type="file" name="file" class="form-control">
-            </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-success">
+                <input type="submit" class="btn-submit btn">
             </div>
         </form>
-        {% for file in files %}
-        <div class="row mt-4 border-bottom">
-            <div class="col-4">
-                <p class="text-truncate">Nom : {{ file.name }}</p>
-                <a href="/uploaded/{{ file.path }}">
-                    <img src="/file.png" width="50%" />
-                </a>
-            </div>
-            <div class="col-8">
-                <p>{{ file.description }}</p>
-            </div>
-        </div>
-        {% endfor %}
     </div>
 </body>
 </html>
