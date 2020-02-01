@@ -60,5 +60,8 @@ It would be great to add a database on this. CouchDB would probably make a good 
 
 It might be cool to handle cookies with another service. KituraSession example works well with PostgreSQL and Redis, but it might be a bit huge for the usage this website requires. Perhaps a simple SQLite would be enough ?
 
+### Files Name
+
+Now the downloading of files is quite naive. It just uses the StaticFile Middleware to display the raw file, and the browser download it magically. As the names are changed with UUID, you can't retrieve a file with it's original name, which is quite unpractical. It could be fine to returns the file with the right headers and proper filename
 
 Feel free to open Pull Requests 😁
