@@ -131,7 +131,7 @@ router.post("/connection") {
         return
     }
     
-    guard passwd == password else {
+    guard passwd == env.get("password")! else {
         response.status(.forbidden)
         _ = try? response.redirect("/connection")
         return
