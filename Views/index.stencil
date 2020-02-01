@@ -15,7 +15,7 @@
 </head>
 <body>
     <div class="container p-4 bg-light">
-        <form class="form mb-4" method="POST" action="/" enctype="multipart/form-data">
+        <form class="form mb-4" method="POST" action="/home" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="description">Description :</label>
                 <textarea id="description" name="description" class="lg-textarea form-control"></textarea>

@@ -8,6 +8,7 @@
 import Foundation
 import Kitura
 import KituraSession
+import DotEnv
 
 extension Date {
   static func add(days: Int) -> Date {
@@ -22,9 +23,18 @@ class MustBeConnected: RouterMiddleware {
     public func handle(request: RouterRequest, response: RouterResponse, next: @escaping () -> Void) throws {
         let oldestValidDate = Date.add(days: -30)
         
-        guard let token = request.session?["connexionToken"] else {
-            _ = try? response.redirect("/connection", status: .unauthorized)
-            return
+        let env = DotEnv(withFile: ".env")
+        
+        guard let token: Token = request.session?[env.get("cookiename")!],
+            let lastConnexion = validConnexion[token.value],
+            oldestValidDate < lastConnexion else {
+                
+                response.status(.unauthorized)
+                _ = try? response.redirect("/connection")
+                return
         }
+        
+        validConnexion[token.value] = Date()
+        next()
     }
 }

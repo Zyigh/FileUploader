@@ -20,16 +20,31 @@ guard let password = env.get("password") else {
     exit(1)
 }
 
+guard let cookie = env.get("cookiename") else {
+    Log.exit("Must provide a cookie name in .env")
+    exit(1)
+}
+
 let router = Router()
 
-router.all(middleware: [Session(secret: secret), Compression(), StaticFileServer()])
-router.post(middleware: [BodyParser()])
-
-router.get("/", middleware: [MustBeConnected()])
-router.post("/", middleware: [MustBeConnected(), AddFileMiddleware()])
 router.add(templateEngine: StencilTemplateEngine())
 
+let session = Session(secret: secret, cookie: [.name("caliban-session-id")], store: nil)
+
+router.all(middleware: [session, Compression(), StaticFileServer()])
+router.post(middleware: [BodyParser()])
+
+router.get("/home", middleware: [MustBeConnected()])
+router.post("/home", middleware: [MustBeConnected(), AddFileMiddleware()])
+
 router.get("/") {
+    _, response, next in
+    
+    _ = try? response.redirect("/home")
+    next()
+}
+
+router.get("/home") {
     _, response, next in
     
     defer {
@@ -39,13 +54,13 @@ router.get("/") {
     do {
         try response.render("index.stencil", context: ["files" : Buffer.toArray()])
     } catch let e {
+        Log.error(e.localizedDescription)
         response.status(.internalServerError)
-        response.send(e.localizedDescription)
     }
     
 }
 
-router.post("/") {
+router.post("/home") {
     request, response, next in
     
     defer {
@@ -101,7 +116,7 @@ router.get("/connection") {
     }
     
     do {
-        try response.render("connection.stencil", context: [:])
+        try response.render("connection.stencil", context: [:]).end()
     } catch let e {
         response.status(.internalServerError)
         response.send(e.localizedDescription)
@@ -111,11 +126,35 @@ router.get("/connection") {
 router.post("/connection") {
     request, response, next in
     
-    defer {
-        next()
+    guard let data = request.body?.asURLEncoded, let passwd = data["password"] else {
+        response.status(.badRequest)
+        return
     }
     
-    dump(request)
+    guard passwd == password else {
+        response.status(.forbidden)
+        _ = try? response.redirect("/connection")
+        return
+    }
+    
+    let token = Token(value: UUID())
+    validConnexion[token.value] = Date()
+    request.session?[cookie] = token
+    
+    request.session?.save(callback: { error in
+        guard nil == error else {
+            response.status(.internalServerError)
+            return
+        }
+
+        do {
+            try response.redirect("/home")
+            next()
+        } catch let e {
+            Log.error(e.localizedDescription)
+            response.status(.internalServerError)
+        }
+    })
 }
 
 Kitura.addHTTPServer(onPort: 80, with: router)

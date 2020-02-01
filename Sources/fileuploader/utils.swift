@@ -7,3 +7,7 @@ extension UUID {
 }
 
 var validConnexion = [UUID: Date]()
+
+struct Token: Codable {
+    let value: UUID
+}
