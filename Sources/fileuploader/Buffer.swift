@@ -1,11 +1,3 @@
-
-//
-//  File.swift
-//  fileuploader
-//
-//  Created by Hugo Medina on 31/01/2020.
-//
-
 import Foundation
 
 class Buffer: Codable {

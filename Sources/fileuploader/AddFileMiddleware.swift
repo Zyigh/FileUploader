@@ -1,12 +1,4 @@
-//
-//  AddFileMiddleware.swift
-//  fileuploader
-//
-//  Created by Hugo Medina on 31/01/2020.
-//
-
 import Foundation
-
 import Kitura
 
 class AddFileMiddleware: RouterMiddleware {
