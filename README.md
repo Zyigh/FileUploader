@@ -56,6 +56,8 @@ Actually, all the data is stored in memory
 
 It would be great to add a database on this. CouchDB would probably make a good deal for that.
 
+Also we might want to look at this https://github.com/Oyvindkg/swiftydb 🐬
+
 ### Cookies
 
 It might be cool to handle cookies with another service. KituraSession example works well with PostgreSQL and Redis, but it might be a bit huge for the usage this website requires. Perhaps a simple SQLite would be enough ?
