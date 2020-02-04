@@ -137,6 +137,24 @@
         }
       },
       {
+        "package": "SwiftKuery",
+        "repositoryURL": "https://github.com/IBM-Swift/Swift-Kuery.git",
+        "state": {
+          "branch": null,
+          "revision": "d8e7cba51c6ca75de23b0229f584b536492ce23e",
+          "version": "3.0.1"
+        }
+      },
+      {
+        "package": "SwiftKuerySQLite",
+        "repositoryURL": "https://github.com/IBM-Swift/Swift-Kuery-SQLite.git",
+        "state": {
+          "branch": null,
+          "revision": "a88115e0e276240d1a98010c235aeec457a07c53",
+          "version": "2.0.1"
+        }
+      },
+      {
         "package": "swift-log",
         "repositoryURL": "https://github.com/apple/swift-log.git",
         "state": {

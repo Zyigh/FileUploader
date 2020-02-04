@@ -6,6 +6,7 @@ import Kitura
 import KituraCompression
 import KituraSession
 import KituraStencil
+import SwiftKuerySQLite
 
 HeliumLogger.use()
 

@@ -54,9 +54,7 @@ swift run
 
 Actually, all the data is stored in memory 
 
-It would be great to add a database on this. CouchDB would probably make a good deal for that.
-
-Also we might want to look at this https://github.com/Oyvindkg/swiftydb 🐬
+Will be done with Kuery SQLite 
 
 ### Cookies
 
